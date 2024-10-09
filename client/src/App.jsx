@@ -13,7 +13,7 @@ function App() {
           {/* Route for Welcome Page */}
           <Route path="/" element={<WelcomePage />} />
           {/* Route for Vehicle Info Form Page */}
-          <Route path="/vehicle-info-form" element={<VehicleInfoForm />} />
+          <Route path="/vehicle-info" element={<VehicleInfoForm />} />
           {/* Route for Vehicle Info Display Page */}
           <Route path="/vehicle-info-display" element={<VehicleInfoDisplay />} />
         </Routes>
