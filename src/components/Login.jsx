@@ -12,14 +12,11 @@ function LoginPage() {
     e.preventDefault();
     try {
       const response = await axios.post('/api/users/login', { email, password });
-      console.log(response.data);
-      // Save the token in localStorage or state
-      localStorage.setItem('token', response.data.token);
-      navigate('/vehicle-info'); // Redirect to your target page after login
+      localStorage.setItem('token', response.data.token); // Save token
+      navigate('/vehicle-info'); // Redirect to profile
     } catch (error) {
       console.error('Login failed:', error.response.data);
-      alert('Login failed, please check your credentials');
-    }
+      alert('Login failed, please check your credentials');    }
   };
 
   return (

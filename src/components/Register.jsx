@@ -12,7 +12,6 @@ function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
@@ -23,10 +22,11 @@ function RegisterPage() {
       console.log(response.data);
       alert('Registration successful');
       navigate('/login'); // Redirect to login page after registration
+      //navigate('/profile'); // Redirect to profile
     } catch (error) {
       console.error('Registration failed:', error.response?.data?.message || error.message);
       alert(error.response?.data?.message || 'Registration failed, please try again');
-    }
+        }
   };
 
   return (

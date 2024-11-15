@@ -1,6 +1,7 @@
 // src/components/Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Profile from './Profile'; // Import the Profile component
 
 function Header() {
   return (
@@ -9,7 +10,8 @@ function Header() {
         <h1 className="text-2xl font-bold">
           Vehicle Maintenance Record System
         </h1>
-        <nav>
+        <nav className="flex items-center">
+          {/* Profile Link */}
           <Link to="/profile" className="text-white hover:text-gray-200 mx-2">
             Profile
           </Link>

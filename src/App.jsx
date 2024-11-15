@@ -6,9 +6,14 @@ import VehicleInfoForm from './pages/VehicleInfoForm.jsx';
 import VehicleInfoDisplay from './pages/VehicleInfoDisplay.jsx';
 import RegisterPage from '../src/components/Register.jsx';
 import LoginPage from '../src/components/Login.jsx';
+import Profile from '../src/components/Profile.jsx';
+import { VehicleProvider } from '../src/pages/context.jsx';
+
+
 
 function App() {
   return (
+    <VehicleProvider>
     <Router>
       <div className="App">
         <Routes>
@@ -20,9 +25,12 @@ function App() {
           <Route path="/vehicle-info" element={<VehicleInfoForm />} />
           {/* Route for Vehicle Info Display Page */}
           <Route path="/vehicle-info-display" element={<VehicleInfoDisplay />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>
+    </VehicleProvider>
+
   );
 }
 
