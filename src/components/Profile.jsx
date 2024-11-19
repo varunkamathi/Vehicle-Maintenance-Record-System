@@ -35,6 +35,7 @@ function Profile() {
     axios.post('/api/users/logout', {}, { withCredentials: true })
       .then(() => {
         navigate('/login');
+        localStorage.removeItem("userId");
       })
       .catch(error => console.error('Logout error:', error));
   };

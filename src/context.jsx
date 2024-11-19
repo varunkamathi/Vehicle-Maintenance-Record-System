@@ -9,7 +9,9 @@ export const VehicleContext = createContext();
 
 export const VehicleProvider = ({ children }) => {
   const [vehicles, setVehicles] = useState([]);
-
+  const storedUserId = localStorage.getItem("userId");
+  // paste use state here that you want to be used as global;
+  
   const addVehicle = async (vehicleData) => {
     const token = localStorage.getItem('token');
     await axios.post('/api/users/add', vehicleData, {
@@ -26,10 +28,11 @@ export const VehicleProvider = ({ children }) => {
         console.error("No token found. User might not be authenticated.");
         return;
       }
-      const response = await axios.get('/api/vehicles/get', {
+      const response = await axios.get(`/api/vehicles/get/${storedUserId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setVehicles(response.data);
+      console.log("checking get vehicles",response);
+      setVehicles(response.data.vehicles);
     } catch (error) {
       console.error("Error fetching vehicles:", error.response?.data || error.message);
     }

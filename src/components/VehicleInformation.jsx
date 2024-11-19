@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+// import Cookies from 'js-cookie';
 
 function VehicleServiceInformation() {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ function VehicleServiceInformation() {
     serviceCenter: '',
     cost: '',
   });
+
+ 
+
 
   const handleVehicleChange = (event) => {
     const { name, value } = event.target;
@@ -41,9 +45,21 @@ function VehicleServiceInformation() {
         return;
       }
   
-      const payload = { vehicleData, serviceData };
-      console.log('Payload being sent:', payload); // Debug: Log the payload
-  
+      const storedUserId = localStorage.getItem("userId");
+
+      let payload = { vehicleData, serviceData };
+      if(storedUserId){
+        payload={
+          ...payload,
+          userId:storedUserId
+        }
+      }
+
+      
+      // const accessToken = Cookies.get("accessToken");
+      // console.log("access token is",accessToken);
+      console.log('checking payload:', payload); // Debug: Log the payload
+      
       // Send the request with credentials (cookies will be automatically included)
       const response = await axios.post(
         '/api/vehicles/add',

@@ -33,23 +33,23 @@ function VehicleInfoDisplay() {
         {/* Display each vehicle's information */}
         {vehicles.length > 0 ? (
           vehicles.map((vehicle, index) => (
-            <div  key={vehicle._id} className="mb-6 p-4 bg-white rounded-lg shadow-md">
+            <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold mb-4">Vehicle Information #{index + 1}</h2>
               <div className="p-4 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold">Make: {vehicle.make || 'N/A'}</h3>
-                <p>Model: {vehicle.model || 'N/A'}</p>
-                <p>Registration: {vehicle.registration || 'N/A'}</p>
-                <p>VIN: {vehicle.vin || 'N/A'}</p>
-                <p>Last Service Date: {vehicle.lastServiceDate || 'N/A'}</p>
-                <p>Next Service Date: {vehicle.nextServiceDate || 'N/A'}</p>
+                <h3 className="font-semibold">Make: {vehicle.vehicleData.make || 'N/A'}</h3>
+                <p>Model: {vehicle.vehicleData.model || 'N/A'}</p>
+                <p>Registration: {vehicle.vehicleData.registration || 'N/A'}</p>
+                <p>VIN: {vehicle.vehicleData.vin || 'N/A'}</p>
+                <p>Last Service Date: {vehicle.serviceData.lastServiceDate || 'N/A'}</p>
+                <p>Next Service Date: {vehicle.serviceData.nextServiceDate || 'N/A'}</p>
               </div>
 
               {/* Service Information, Insurance, E-Challan, and Other Details sections */}
               <section className="p-4 bg-gray-50 rounded-lg mt-4">
                 <h2 className="font-semibold">Service Information</h2>
-                <p>Service Type: {vehicle.serviceType || 'N/A'}</p>
-                <p>Service Center: {vehicle.serviceCenter || 'N/A'}</p>
-                <p>Cost: {vehicle.cost ? `$${vehicle.cost}` : 'N/A'}</p>
+                <p>Service Type: {vehicle.serviceData.serviceType || 'N/A'}</p>
+                <p>Service Center: {vehicle.serviceData.serviceCenter || 'N/A'}</p>
+                <p>Cost: {vehicle.serviceData.cost ? `₹${vehicle.serviceData.cost}` : 'N/A'}</p>
               </section>
               <div className="p-4 bg-gray-50 rounded-lg mt-4">
                 <InsuranceDetails data={vehicle.insuranceDetails} />
