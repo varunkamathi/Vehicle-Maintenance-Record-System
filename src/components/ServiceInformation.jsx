@@ -1,6 +1,7 @@
 // src/components/ServiceInformation.js
 import React from 'react';
 
+
 function ServiceInformation({ serviceData, handleChange }) {
   return (
     <section className="mb-6 p-4 bg-white rounded-lg shadow-md">

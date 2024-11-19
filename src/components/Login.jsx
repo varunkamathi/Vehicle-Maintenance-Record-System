@@ -1,5 +1,5 @@
 // src/pages/LoginPage.js
-import React, { useState } from 'react';
+import React , { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ function LoginPage() {
     try {
       const response = await axios.post('/api/users/login', { email, password });
       localStorage.setItem('token', response.data.token); // Save token
-      navigate('/vehicle-info'); // Redirect to profile
+      navigate('/vehicle-info-display'); // Redirect to profile
     } catch (error) {
       console.error('Login failed:', error.response.data);
       alert('Login failed, please check your credentials');    }

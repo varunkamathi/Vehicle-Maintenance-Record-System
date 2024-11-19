@@ -1,10 +1,9 @@
 // src/pages/VehicleInfoForm.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { VehicleContext } from '../pages/context.jsx';
+import { VehicleContext } from '../context.jsx';
 import Header from '../components/Header.jsx';
-import VehicleInformation from '../components/VehicleInformation';
-import ServiceInformation from '../components/ServiceInformation';
+import VehicleInformation from '../components/VehicleInformation.jsx';
 
 function VehicleInfoForm() {
   const navigate = useNavigate();
@@ -43,17 +42,11 @@ function VehicleInfoForm() {
   return (
     <div>
       <Header />
-      <div className="flex justify-center items-start p-6 bg-gray-100 min-h-screen">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-4xl">
-          <h2 className="text-2xl font-bold mb-6">Vehicle and Service Information Form</h2>
+      <div  onSubmit={handleSubmit} className="flex justify-center items-start p-6 bg-gray-100 min-h-screen">
+        
+          
           <VehicleInformation vehicleData={vehicleData} handleChange={handleVehicleChange} />
-          <ServiceInformation serviceData={serviceData} handleChange={handleServiceChange} />
-          <div className="mt-6">
-            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full">
-              Submit Information
-            </button>
-          </div>
-        </form>
+        
       </div>
     </div>
   );

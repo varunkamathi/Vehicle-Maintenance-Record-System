@@ -1,12 +1,15 @@
+// src/context/VehicleContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 export const VehicleContext = createContext();
+
 
 export const VehicleProvider = ({ children }) => {
   const [vehicles, setVehicles] = useState([]);
 
-  // Function to add a new vehicle
   const addVehicle = async (vehicleData) => {
     const token = localStorage.getItem('token');
     await axios.post('/api/users/add', vehicleData, {
@@ -17,21 +20,31 @@ export const VehicleProvider = ({ children }) => {
 
   // Function to fetch all vehicles for the logged-in user
   const fetchVehicles = async () => {
-    const token = localStorage.getItem('token');
-    const response = await axios.get('/api/vehicles/user-vehicles', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    setVehicles(response.data);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("No token found. User might not be authenticated.");
+        return;
+      }
+      const response = await axios.get('/api/vehicles/get', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setVehicles(response.data);
+    } catch (error) {
+      console.error("Error fetching vehicles:", error.response?.data || error.message);
+    }
   };
-
+  
   // Fetch vehicles on initial load
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) fetchVehicles();
   }, []);
 
+  
+
   return (
-    <VehicleContext.Provider value={{ vehicles, addVehicle }}>
+    <VehicleContext.Provider value={{ vehicles, addVehicle}}>
       {children}
     </VehicleContext.Provider>
   );

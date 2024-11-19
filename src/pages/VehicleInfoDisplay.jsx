@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.jsx';
-import { VehicleContext } from '../pages/context.jsx';
+import { VehicleContext } from '../context.jsx';
 import InsuranceDetails from '../components/InsuranceInformation.jsx';
 import EChallanDetails from '../components/EChallanInformation.jsx';
 import OtherDetails from '../components/OtherInformation.jsx';
@@ -33,7 +33,7 @@ function VehicleInfoDisplay() {
         {/* Display each vehicle's information */}
         {vehicles.length > 0 ? (
           vehicles.map((vehicle, index) => (
-            <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
+            <div  key={vehicle._id} className="mb-6 p-4 bg-white rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold mb-4">Vehicle Information #{index + 1}</h2>
               <div className="p-4 bg-gray-50 rounded-lg">
                 <h3 className="font-semibold">Make: {vehicle.make || 'N/A'}</h3>

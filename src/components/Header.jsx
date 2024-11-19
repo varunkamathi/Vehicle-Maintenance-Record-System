@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Profile from './Profile'; // Import the Profile component
+import profile from '../image/profile.png'
 
 function Header() {
   return (
@@ -13,7 +14,11 @@ function Header() {
         <nav className="flex items-center">
           {/* Profile Link */}
           <Link to="/profile" className="text-white hover:text-gray-200 mx-2">
-            Profile
+          <img
+            src={profile} // Use the appropriate path or URL for your image
+            alt="Illustration of a person"
+            className="w-12 h-12 rounded-full"
+          />
           </Link>
         </nav>
       </div>
