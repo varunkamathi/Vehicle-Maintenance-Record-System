@@ -30,35 +30,35 @@ function RegisterPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h2 className="text-3xl font-bold mb-6">Register</h2>
+    <div className="flex flex-col items-center justify-center min-h-full rounded-xl bg-slate-300 ">
+      <h2 className="text-3xl font-bold mb-6 text-slate-700">Register</h2>
       <form onSubmit={handleRegister} className="flex flex-col space-y-4 w-80">
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="p-2 rounded bg-gray-700"
+          className="p-2 rounded-lg bg-white border border-gray-400 text-slate-700"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-2 rounded bg-gray-700"
+          className="p-2 rounded-lg bg-white border border-gray-400 text-slate-700"
         />
         <input
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="p-2 rounded bg-gray-700"
+          className="p-2 rounded-lg bg-white border border-gray-400 text-slate-700"
         />
         <button
           type="submit"
-          className="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded shadow-lg transition duration-200"
+          className="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-full shadow-lg transition duration-200"
         >
-          Register
+          Sign Up
         </button>
       </form>
     </div>

@@ -27,7 +27,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+    <div className="flex flex-col items-center justify-center min-h-full text-slate-700 rounded-xl bg-slate-300 ">
       <h2 className="text-3xl font-bold mb-6">Login</h2>
       <form onSubmit={handleLogin} className="flex flex-col space-y-4 w-80">
         <input
@@ -35,20 +35,20 @@ function LoginPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="p-2 rounded bg-gray-700"
+          className="p-2 rounded-lg bg-white border border-gray-400"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-2 rounded bg-gray-700"
+          className="p-2 rounded-lg bg-white border border-gray-400"
         />
         <button
           type="submit"
-          className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded shadow-lg transition duration-200"
+          className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded-full shadow-lg transition duration-200"
         >
-          Login
+          Sign In
         </button>
       </form>
     </div>

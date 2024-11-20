@@ -8,10 +8,11 @@ function WelcomePage() {
   // State to toggle between Login and Register forms
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   return (
     <div className="flex flex-row items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="flex flex-row items-center justify-between w-full max-w-4xl mx-auto px-8">
+      <div className={`flex flex-row items-center justify-between w-full max-w-4xl mx-auto px-8 ${isPopupVisible ? 'blur-sm' : ''}`}>
         
         {/* Left Side: Welcome Text and Buttons */}
         <div className="flex flex-col items-start justify-center w-1/2">
@@ -26,7 +27,7 @@ function WelcomePage() {
           </p>
           <div className="flex flex-col items-start space-y-4">
             <button
-              onClick={() => { setShowLogin(true); setShowRegister(false); }}
+              onClick={() => { setShowLogin(true); setShowRegister(false); setIsPopupVisible(true)}}
               className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded shadow-lg transition duration-200 font-bold mx-3"
             >
               Login
@@ -55,12 +56,12 @@ function WelcomePage() {
       {/* Login Modal */}
       {showLogin && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
-          <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
+          <div className="p-8 rounded shadow-lg w-full max-w-md h-4/5">
             <button
-              onClick={() => setShowLogin(false)}
-              className="text-gray-500 float-right"
+              onClick={() => {setShowLogin(false); setIsPopupVisible(false);}}
+              className="text-white text-xl m-1 float-right cursor-pointer"
             >
-              Close
+              X
             </button>
             <LoginPage /> {/* Display LoginPage component */}
           </div>
@@ -70,12 +71,12 @@ function WelcomePage() {
       {/* Register Modal */}
       {showRegister && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
-          <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
+          <div className="p-8 rounded shadow-lg w-full max-w-md h-4/5">
             <button
-              onClick={() => setShowRegister(false)}
-              className="text-gray-500 float-right"
+              onClick={() => {setShowRegister(false); setIsPopupVisible(false)}}
+              className="text-white text-xl m-1 float-right cursor-pointer"
             >
-              Close
+              X
             </button>
             <RegisterPage /> {/* Display RegisterPage component */}
           </div>
