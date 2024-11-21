@@ -203,10 +203,10 @@ function VehicleServiceInformation() {
         </div>
 
         {/* Submit button */}
-        <div className="col-span-2 mt-4">
+        <div className="col-span-2 mt-4 flex flex-col items-center">
           <button
             type="submit"
-            className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            className="w-1/3 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded shadow-md transition duration-200"
           >
             Submit
           </button>

@@ -42,7 +42,7 @@ function VehicleInfoForm() {
   return (
     <div>
       <Header />
-      <div  onSubmit={handleSubmit} className="flex justify-center items-start p-6 bg-gray-100 min-h-screen">
+      <div  onSubmit={handleSubmit} className="items-start pt-6 mx-auto max-w-[1296px] min-h-screen">
         
           
           <VehicleInformation vehicleData={vehicleData} handleChange={handleVehicleChange} />

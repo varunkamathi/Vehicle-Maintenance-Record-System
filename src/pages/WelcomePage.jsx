@@ -11,31 +11,31 @@ function WelcomePage() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   return (
-    <div className="flex flex-row items-center justify-center min-h-screen bg-gray-900 text-white">
+    <div className="flex flex-row items-center justify-center min-h-screen bg-gray-100 text-white">
       <div className={`flex flex-row items-center justify-between w-full max-w-4xl mx-auto px-8 ${isPopupVisible ? 'blur-sm' : ''}`}>
         
         {/* Left Side: Welcome Text and Buttons */}
         <div className="flex flex-col items-start justify-center w-1/2">
-          <h1 className="text-4xl font-bold mb-6 text-white">
+          <h1 className="text-4xl font-bold mb-6 text-sky-950">
             Welcome to Vehicle Maintenance Record System
           </h1>
-          <p className='text-1xl font-bold mb-6 text-white uppercase'>
+          <p className='text-1xl font-bold mb-6 text-sky-950 uppercase'>
             We introduce our website that merges all special features you can use in one platform.
           </p>
-          <p className="text-lg mb-6 text-gray-300">
+          <p className="text-lg mb-6 text-gray-600">
             Please log in or sign up to continue.
           </p>
           <div className="flex flex-col items-start space-y-4">
             <button
               onClick={() => { setShowLogin(true); setShowRegister(false); setIsPopupVisible(true)}}
-              className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded shadow-lg transition duration-200 font-bold mx-3"
+              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded shadow-lg transition duration-200 font-bold"
             >
               Login
             </button>
             
             <button
               onClick={() => { setShowRegister(true); setShowLogin(false); }}
-              className="text-white px-4 py-2 rounded shadow-lg transition duration-200 font-bold"
+              className="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded shadow-lg transition duration-200 font-bold"
             >
               New User Register here to continue
             </button>
