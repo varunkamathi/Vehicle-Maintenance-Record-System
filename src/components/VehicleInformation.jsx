@@ -1,219 +1,213 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function VehicleServiceInformation() {
+function VehicleInformation({setIsAddClicked,setVehicles}) {
   const navigate = useNavigate();
-
-  const [vehicleData, setVehicleData] = useState({
-    make: '',
-    model: '',
-    registration: '',
-    vin: '',
-  });
-
-  const [serviceData, setServiceData] = useState({
-    lastServiceDate: '',
-    nextServiceDate: '',
-    serviceType: '',
-    serviceCenter: '',
-    cost: '',
-  });
-
  
+  const [vehicleData, setVehicleData] = useState({
+    ownerName: '',
+    vin: '',
+    vrn: '', // Optional VRN field
+  });
 
+  console.log(vehicleData)
 
-  const handleVehicleChange = (event) => {
+  const [loading, setLoading] = useState(false);
+
+  // Handle input changes
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     setVehicleData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleServiceChange = (event) => {
-    const { name, value } = event.target;
-    setServiceData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  // Validate VIN and VRN
+  // const validateVIN = (vin) => /^[A-HJ-NPR-Z0-9]{17}$/.test(vin); // Example VIN regex
+  // const validateVRN = (vrn) => /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/.test(vrn); // Example VRN regex
 
+  // Handle VRN lookup
+  // const handleVRNLookup = async () => {
+  //   const { vrn } = vehicleData;
+  //   if (!vrn) {
+  //     toast.error('Please enter a VRN to search.');
+  //     return;
+  //   }
+
+  //   if (!validateVRN(vrn)) {
+  //     toast.error('Invalid VRN format. Example: MH12AB1234.');
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.get(`/api/vehicles/lookup-vrn/${vrn}`);
+  //     const { ownerName, vin } = response.data;
+
+  //     setVehicleData((prevData) => ({
+  //       ...prevData,
+  //       ownerName: ownerName || '',
+  //       vin: vin || '',
+  //     }));
+
+  //     toast.success('Vehicle information retrieved successfully.');
+  //   } catch (error) {
+  //     console.error('Error fetching vehicle details:', error.response?.data || error.message);
+  //     toast.error('Failed to retrieve vehicle details. Please check the VRN.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      alert("Form submitted!");
+    }, 2000);
+
+    const { ownerName, vin, vrn } = vehicleData;
+    if(!ownerName || !vrn){
+      return toast.error("Both owner name and vrn is required")
+    }
+
+    // if (!validateVIN(vin)) {
+    //   toast.error('Invalid VIN format. VIN must be 17 characters.');
+    //   return;
+    // }
+
     try {
-      const token = localStorage.getItem('token'); // Retrieve token from localStorage
-      console.log('Retrieved Token:', token); // Debug: Log the token
-  
-      if (!token) {
-        alert('You are not logged in. Please log in first.');
-        return;
-      }
-  
-      const storedUserId = localStorage.getItem("userId");
+      // const token = localStorage.getItem('token');
+      // if (!token) {
+      //   toast.error('You are not logged in. Please log in first.');
+      //   return;
+      // }
 
-      let payload = { vehicleData, serviceData };
-      if(storedUserId){
-        payload={
-          ...payload,
-          userId:storedUserId
-        }
+      const storedUserId = localStorage.getItem('userId');
+      if(!storedUserId){
+        return toast.error("Kindly logged in first!");
+      }
+      const response =await axios.get(`/api/vehicles/rto/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`)
+    
+
+      if(response.status ===403){
+        return toast.error("You are not authorized kindly check your owner name");
       }
 
-      
-      // const accessToken = Cookies.get("accessToken");
-      // console.log("access token is",accessToken);
-      console.log('checking payload:', payload); // Debug: Log the payload
-      
-      // Send the request with credentials (cookies will be automatically included)
-      const response = await axios.post(
-        '/api/vehicles/add',
-        payload,
-        {
-          withCredentials: true, // This will send the cookies with the request
+        if(response.status===200){
+          console.log("response from rto is",response);
+          toast.success('Vehicle information added successfully.');
+          setIsAddClicked(false);
+        // adding vehickes to vehicle array for the optimistic updates;
+       setVehicles((prev)=>{
+          console.log(prev);
+          return [response.data.vehicle,...prev]
+       });
         }
-      );
-  
-      console.log('Response:', response.data); // Debug: Log the server response
-      alert('Vehicle and Service information added successfully');
-      navigate('/vehicle-info-display'); // Redirect after submission
+    
+      // const payload = { ...vehicleData, userId: storedUserId || null };
+
+      // await axios.post('/api/vehicles/add', payload, { withCredentials: true });
+
+      // navigate('/vehicle-info-display');
     } catch (error) {
-      console.error(
-        'Error adding vehicle and service data:',
-        error.response?.data || error.message
-      );
-      alert('Error adding vehicle and service data');
+      console.log("error in communicate with RTO",error);
+      console.error('Error adding vehicle data:', error.response?.data || error.message);
+      toast.error(error.response?.data || error.message||'Error adding vehicle data. Please try again.');
     }
   };
 
   return (
     <section className="mb-6 p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Vehicle and Service Information</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Vehicle Information */}
+      <ToastContainer />
+      <h2 className="text-2xl font-semibold mb-4">Add Vehicle Information</h2>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+        {/* Owner Name */}
         <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Make</label>
+          <label className="block mb-2 font-semibold">Owner Name</label>
           <input
             type="text"
-            name="make"
-            value={vehicleData.make}
-            onChange={handleVehicleChange}
+            name="ownerName"
+            value={vehicleData.ownerName}
+            onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter Make (e.g., Toyota)"
-            
+            placeholder="Enter Owner Name"
+            required
           />
         </div>
 
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Model</label>
+         {/* Optional VRN */}
+         <div className="p-4 bg-gray-50 rounded-lg">
+          <label className="block mb-2 font-semibold">VRN ( Vehicle Registration Number )</label>
           <input
             type="text"
-            name="model"
-            value={vehicleData.model}
-            onChange={handleVehicleChange}
+            name="vrn"
+            value={vehicleData.vrn}
+            onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter Model (e.g., Camry)"
-            
+            placeholder="Enter VRN (e.g., MH12AB1234)"
+            required
           />
         </div>
 
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Registration Number</label>
-          <input
-            type="text"
-            name="registration"
-            value={vehicleData.registration}
-            onChange={handleVehicleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter Registration No. (e.g., AB123CD)"
-            
-          />
-        </div>
 
+        {/* VIN */}
         <div className="p-4 bg-gray-50 rounded-lg">
           <label className="block mb-2 font-semibold">VIN</label>
           <input
             type="text"
             name="vin"
             value={vehicleData.vin}
-            onChange={handleVehicleChange}
+            onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter VIN (e.g., 1234567890ABC)"
-          
+            placeholder="Enter VIN (17 characters)"
+            // required
           />
         </div>
 
-        {/* Service Information */}
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Last Service Date</label>
-          <input
-            type="date"
-            name="lastServiceDate"
-            value={serviceData.lastServiceDate}
-            onChange={handleServiceChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            
-          />
-        </div>
+       
 
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Next Service Date</label>
-          <input
-            type="date"
-            name="nextServiceDate"
-            value={serviceData.nextServiceDate}
-            onChange={handleServiceChange}
-            className="w-full p-2 border border-gray-300 rounded"
-          
-          />
-        </div>
-
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Service Type</label>
-          <input
-            type="text"
-            name="serviceType"
-            value={serviceData.serviceType}
-            onChange={handleServiceChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter Service Type (e.g., Oil Change)"
-            
-          />
-        </div>
-
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Service Center</label>
-          <input
-            type="text"
-            name="serviceCenter"
-            value={serviceData.serviceCenter}
-            onChange={handleServiceChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter Service Center (e.g., ABC Motors)"
-            
-          />
-        </div>
-
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">Cost</label>
-          <input
-            type="number"
-            name="cost"
-            value={serviceData.cost}
-            onChange={handleServiceChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter Service Cost"
-            required
-          />
-        </div>
-
-        {/* Submit button */}
-        <div className="col-span-2 mt-4 flex flex-col items-center">
+        {/* VRN Lookup Button */}
+        {/* <div className="col-span-1 flex justify-end">
           <button
-            type="submit"
-            className="w-1/3 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded shadow-md transition duration-200"
+            type="button"
+            onClick={handleVRNLookup}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded shadow-md transition duration-200"
+            disabled={loading}
           >
-            Submit
+            {loading ? 'Fetching...' : 'Lookup VRN'}
           </button>
+        </div> */}
+
+        {/* Submit Button */}
+        <div className="col-span-1 mt-4 flex flex-col items-center">
+        <button
+      
+      disabled={isLoading}
+      className={`relative flex items-center justify-center px-6 py-2 text-white font-semibold rounded-lg ${
+        isLoading
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-blue-500 hover:bg-blue-600"
+      }`}
+    >
+      {isLoading ? (
+        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+      ) : (
+        "Submit"
+      )}
+    </button>
+
+         
         </div>
       </form>
     </section>
   );
 }
 
-export default VehicleServiceInformation;
+export default VehicleInformation;
