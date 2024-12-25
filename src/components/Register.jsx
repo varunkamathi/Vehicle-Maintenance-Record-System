@@ -21,7 +21,7 @@ function RegisterPage() {
       const response = await axios.post('/api/users/register', { email, password });
       console.log(response.data);
       alert('Registration successful');
-      navigate('/Welcome'); // Redirect to login page after registration
+      navigate('/'); // Redirect to login page after registration
       //navigate('/profile'); // Redirect to profile
     } catch (error) {
       console.error('Registration failed:', error.response?.data?.message || error.message);

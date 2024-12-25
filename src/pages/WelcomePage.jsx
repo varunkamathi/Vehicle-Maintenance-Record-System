@@ -1,8 +1,8 @@
 // src/pages/WelcomePage.js
 import React, { useState } from 'react';
-import boy from './boy.png';
-import RegisterPage from '../components/Register';  // Adjust path if needed
-import LoginPage from '../components/Login';        // Adjust path if needed
+import Nav from '../components/Nav';
+import  Footer  from '../sections/Footer';
+import SuperQuality from '../sections/SuperQuality';
 
 function WelcomePage() {
   // State to toggle between Login and Register forms
@@ -11,12 +11,18 @@ function WelcomePage() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   return (
-    <div className="flex flex-row items-center justify-center min-h-screen bg-gray-100 text-white">
-      <div className={`flex flex-row items-center justify-between w-full max-w-4xl mx-auto px-8 ${isPopupVisible ? 'blur-sm' : ''}`}>
+    <main className='relative'>
+      <header>            <Nav />
+      </header>
+
+    
+    <section id='home' className='padding-x py-10'>
+    <div className="flex flex-col justify-center min-h-screen items-star">
+      
         
         {/* Left Side: Welcome Text and Buttons */}
-        <div className="flex flex-col items-start justify-center w-1/2">
-          <h1 className="text-4xl font-bold mb-6 text-sky-950">
+        
+          <h1 className="text-4xl font-bold mb-6 text-sky-950 ">
             Welcome to Vehicle Maintenance Record System
           </h1>
           <p className='text-1xl font-bold mb-6 text-sky-950 uppercase'>
@@ -26,64 +32,25 @@ function WelcomePage() {
             Please log in or sign up to continue.
           </p>
           <div className="flex flex-col items-start space-y-4">
-            <button
-              onClick={() => { setShowLogin(true); setShowRegister(false); setIsPopupVisible(true)}}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded shadow-lg transition duration-200 font-bold"
-            >
-              Login
-            </button>
-            
-            <button
-              onClick={() => { setShowRegister(true); setShowLogin(false); }}
-              className="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded shadow-lg transition duration-200 font-bold"
-            >
-              New User Register here to continue
-            </button>
-          </div>
+           
         </div>
         
-        {/* Right Side: Image */}
-        <div className="flex items-center justify-center w-1/2">
-          <img
-            src={boy} // Use the appropriate path or URL for your image
-            alt="Illustration of a person"
-            className="w-3/4 h-auto"
-          />
-        </div>
         
-      </div>
 
-      {/* Login Modal */}
-      {showLogin && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
-          <div className="p-8 rounded shadow-lg w-full max-w-md h-4/5">
-            <button
-              onClick={() => {setShowLogin(false); setIsPopupVisible(false);}}
-              className="text-white text-xl m-1 float-right cursor-pointer"
-            >
-              X
-            </button>
-            <LoginPage /> {/* Display LoginPage component */}
-          </div>
-        </div>
-      )}
-
-      {/* Register Modal */}
-      {showRegister && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
-          <div className="p-8 rounded shadow-lg w-full max-w-md h-4/5">
-            <button
-              onClick={() => {setShowRegister(false); setIsPopupVisible(false)}}
-              className="text-white text-xl m-1 float-right cursor-pointer"
-            >
-              X
-            </button>
-            <RegisterPage /> {/* Display RegisterPage component */}
-          </div>
-        </div>
-      )}
       
+      
+    
     </div>
+      </section>
+
+      <section className='padding'>
+        <SuperQuality />
+      </section>
+    
+    <section className=' bg-black padding-x padding-t pb-8'>
+    <Footer />
+    </section>
+    </main>
   );
 }
 

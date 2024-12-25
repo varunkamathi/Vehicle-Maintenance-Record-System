@@ -10,11 +10,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        // Fetch user data from the /api/current-user endpoint
         const response = await axios.get("/api/current-user");
 
         if (response.status === 200) {
-          setUser(response.data); // Set user data
+          setUser(response.data);
         } else {
           console.error("Failed to fetch user profile");
           navigate("/"); // Redirect to login on failure
@@ -25,18 +24,20 @@ const Profile = () => {
           navigate("/"); // Redirect to login on unauthorized
         }
       } finally {
-        setLoading(false); // Set loading state to false
+        setLoading(false);
       }
     };
 
     fetchProfile();
   }, [navigate]);
 
+  // Get email from localStorage
+  const storedEmail = localStorage.getItem("email");
+
   const handleLogout = async () => {
     try {
-      // Send logout request and navigate to login page
-      await axios.post("/api/users/logout", {}, { withCredentials: true });
-      localStorage.removeItem("email"); // Remove email from localStorage (if applicable)
+    
+      localStorage.removeItem("email"); // Remove email from localStorage
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
@@ -52,17 +53,18 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      {user ? (
+    <div className=" bg-white rounded-lg">
+      {user || storedEmail ? (
         <>
           <div className="text-center">
-            <h1 className="text-2xl font-bold mb-2">{user.name || "Name not available"}</h1>
-            <p className="text-gray-700">{user.email || "Email not available"}</p>
+            <p className="text-gray-700">
+              {user?.email || storedEmail || "Email not available"}
+            </p>
           </div>
-          <div className="mt-6 flex justify-center">
+          <div className=" flex justify-center">
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className=" text-black rounded underline "
             >
               Logout
             </button>
@@ -73,7 +75,7 @@ const Profile = () => {
           <p className="text-gray-600">Profile not found.</p>
           <button
             onClick={() => navigate("/")}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="mt-4 bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600"
           >
             Go to Login
           </button>

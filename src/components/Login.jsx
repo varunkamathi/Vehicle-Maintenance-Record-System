@@ -13,8 +13,14 @@ function LoginPage() {
     try {
       const response = await axios.post('/api/users/login', { email, password });
       console.log(response);
+     
       if(response.status===200){
         console.log("LOGGED IN USER ID IS",response?.data?.data?.user?._id)
+         // Store email in localStorage
+      localStorage.setItem("email", email);
+
+      // Navigate to the profile or home page
+      navigate("/profile");
         if(response?.data?.data?.user?._id){
           localStorage.setItem("userId",response?.data?.data?.user?._id);
         }

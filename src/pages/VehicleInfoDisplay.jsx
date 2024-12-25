@@ -12,7 +12,20 @@ function VehicleInfoDisplay() {
   // const { vehicles, setVehicles } = useContext(VehicleContext); // Access vehicles and updater from context
   const [vehicles,setVehicles]=useState([]);
   const [isAddClicked,setIsAddClicked]=useState(false);
+  const [isViewClicked, setIsViewClicked] = useState(false);
+
+
+
+    const toggleProfile = () => {
+      setIsAddClicked((prevState) => !prevState);// Toggle the state
+    };
   console.log("checking the vehicles array",vehicles);
+
+
+  const toggleViewVehicles = () => {
+    setIsViewClicked(!isViewClicked);
+    setIsAddClicked(false); // Ensure Add is turned off
+  };
 
   // get userId;
   const storedUserId = localStorage.getItem("userId");
@@ -69,89 +82,112 @@ function VehicleInfoDisplay() {
   return (
     <div>
       <Header />
-      <div className="m-6 mx-auto max-w-[1296px] min-h-screen bg-gray-100">
+      
         {/* Button to add a new vehicle */}
-        <div className="mb-4">
+        <div className="mb-4 flex space-x-48 m-6 mx-40 max-w-[1296px] ">
           <button
-            onClick={()=>setIsAddClicked(true)}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded shadow-md transition duration-200"
+            onClick={()=>toggleProfile(true)}
+            className=" text-black font-bold underline"
           >
-            Add Vehicle
+         Add Vehicle
+        
           </button>
-        </div>
-      {
+      
+       {/* View Vehicle button */}
+       <button
+            onClick={toggleViewVehicles}
+            className=" text-black font-bold underline"
+          >
+            View Vehicles
+          </button>
+
+  {/* View Insurance button */}
+  <button
+    onClick={() => alert("View Insurance functionality not yet implemented.")}
+    className=" text-black font-bold underline"
+  >
+    View Insurance
+  </button>
+
+  {/* View Challan button */}
+  <button
+    onClick={() => alert("View Challan functionality not yet implemented.")}
+    className=" text-black font-bold underline"
+  >
+    View Challan
+  </button> 
+  </div>
+
+  {
         isAddClicked && <VehicleInformation setIsAddClicked={setIsAddClicked} setVehicles={setVehicles}/>
       }
-        
 
 
         {/* Display each vehicle's information */}
-        {vehicles.length > 0 ? (
-          vehicles.map((vehicle, index) => (
-            <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
-              <h2 className="text-2xl font-semibold mb-4">
-                Vehicle Information #{index + 1}
-              </h2>
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold">
-                  Owner Name: {vehicle.rtoUserVehicleData.rc_owner_name || "N/A"}
-                </h3>
-                {/* <p>VIN: {vehicle.vin || "N/A"}</p> */}
-                <p>VRN: {vehicle.vehicleData.registration || "N/A"}</p>
-                <p>Registration date : {vehicle.rtoUserVehicleData.rc_regn_dt}</p>
-                <p>Vehicle fitness upto : {vehicle.rtoUserVehicleData.rc_fit_upto}</p>
-                <p>Vehicle issue date  : {vehicle.rtoUserVehicleData.rc_status_as_on}</p>
-                {vehicle.rtoUserVehicleData.rc_financer && (
-                  <p>Vehical financer company : {vehicle.rtoUserVehicleData.rc_financer}</p>
-                )}
-                {/* if insurance is present then only show the insurance otherwise leave it */}
-                {
-                 ( vehicle.rtoUserVehicleData.rc_insurance_comp && vehicle.rtoUserVehicleData.rc_insurance_upto)&& (
-                  <>
-                  <p>Insurance company  : {vehicle.rtoUserVehicleData.rc_insurance_comp}</p>
-                  <p>Insurance upto  : {vehicle.rtoUserVehicleData.rc_insurance_upto}</p>
-                  </>
-                 )
-                }
-                  <p>PUCC upto  : {vehicle.rtoUserVehicleData.rc_pucc_upto}</p>
-                  <p>Permanent address  : {vehicle.rtoUserVehicleData.rc_permanent_address}</p>
-                  <p>RC Status  : {vehicle.rtoUserVehicleData.rc_status}</p>
-              </div>
+        {isViewClicked && (
+  vehicles.length > 0 ? (
+    vehicles.map((vehicle, index) => (
+      <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">
+          Vehicle Information #{index + 1}
+        </h2>
+        <div className="p-4 bg-gray-50 rounded-lg">
+          <h3 className="font-semibold">
+            Owner Name: {vehicle.rtoUserVehicleData.rc_owner_name || "N/A"}
+          </h3>
+          {/* <p>VIN: {vehicle.vin || "N/A"}</p> */}
+          <p>VRN: {vehicle.vehicleData.registration || "N/A"}</p>
+          <p>Registration date: {vehicle.rtoUserVehicleData.rc_regn_dt}</p>
+          <p>Vehicle fitness upto: {vehicle.rtoUserVehicleData.rc_fit_upto}</p>
+          <p>Vehicle issue date: {vehicle.rtoUserVehicleData.rc_status_as_on}</p>
+          {vehicle.rtoUserVehicleData.rc_financer && (
+            <p>
+              Vehicle financer company: {vehicle.rtoUserVehicleData.rc_financer}
+            </p>
+          )}
+          {/* Show insurance details only if present */}
+          {(vehicle.rtoUserVehicleData.rc_insurance_comp &&
+            vehicle.rtoUserVehicleData.rc_insurance_upto) && (
+            <>
+              <p>Insurance company: {vehicle.rtoUserVehicleData.rc_insurance_comp}</p>
+              <p>Insurance upto: {vehicle.rtoUserVehicleData.rc_insurance_upto}</p>
+            </>
+          )}
+          <p>PUCC upto: {vehicle.rtoUserVehicleData.rc_pucc_upto}</p>
+          <p>Permanent address: {vehicle.rtoUserVehicleData.rc_permanent_address}</p>
+          <p>RC Status: {vehicle.rtoUserVehicleData.rc_status}</p>
+        </div>
 
-              {/* Other details */}
-              
-
-              {/* Edit and Delete Buttons */}
-              <div className="flex justify-end mt-4 space-x-4">
-                <button
-                  onClick={() => handleDeleteVehicle(index)}
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-200"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="flex justify-center items-start mt-[250px] min-h-screen">
-            <div className="flex flex-col items-center space-y-4">
-              <img
-                src="NoData2.png"
-                alt="Empty Garage"
-                className="w-24 h-24 object-cover opacity-92"
-              />
-              <p className="text-xl font-medium text-gray-700">
-                No vehicles yet—tap&nbsp;
-                <span className="text-orange-500 font-semibold">
-                  Add Vehicle
-                </span>
-                &nbsp;to get started.
-              </p>
-            </div>
-          </div>
-        )}
+        {/* Edit and Delete Buttons */}
+        <div className="flex justify-end mt-4 space-x-4">
+          <button
+            onClick={() => handleDeleteVehicle(index)}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-200"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className="flex justify-center items-start mt-[250px] min-h-screen">
+      <div className="flex flex-col items-center space-y-4">
+        <img
+          src="NoData2.png"
+          alt="Empty Garage"
+          className="w-24 h-24 object-cover opacity-92"
+        />
+        <p className="text-xl font-medium text-gray-700">
+          No vehicles yet—tap&nbsp;
+          <span className="text-orange-500 font-semibold">Add Vehicle</span>
+          &nbsp;to get started.
+        </p>
       </div>
     </div>
+  )
+)}
+
+      </div>
   );
 }
 
