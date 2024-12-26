@@ -93,8 +93,8 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
       if(!storedUserId){
         return toast.error("Kindly logged in first!");
       }
-      const response =await axios.get(`/api/vehicles/rto/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`)
-    
+      //const response =await axios.get(`/api/vehicles/rto/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`)
+      const response =await axios.get(`/api/vehicles/vehicle/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`)
 
       if(response.status ===403){
         return toast.error("You are not authorized kindly check your owner name");
