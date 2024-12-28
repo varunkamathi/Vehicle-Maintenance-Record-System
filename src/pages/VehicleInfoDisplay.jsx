@@ -2,10 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { VehicleContext } from "../context.jsx";
-import InsuranceDetails from "../components/InsuranceInformation.jsx";
 import EChallanDetails from "../components/EChallanInformation.jsx";
 import OtherDetails from "../components/OtherInformation.jsx";
 import VehicleInformation from "../components/VehicleInformation.jsx";
+import MaintenanceTips from "../components/Maintenance.jsx";
+import  Footer  from '../sections/Footer';
+
+  import {acko} from '../assets/images/index.js'
+  import { kotak } from "../assets/images/index.js";
+  import { bajaj} from "../assets/images/index.js";
+  import { bharti } from "../assets/images/index.js";
+  import { zuno } from "../assets/images/index.js";
+
 import axios from "axios";
 
 function VehicleInfoDisplay() {
@@ -13,6 +21,7 @@ function VehicleInfoDisplay() {
   const [vehicles,setVehicles]=useState([]);
   const [isAddClicked,setIsAddClicked]=useState(false);
   const [isViewClicked, setIsViewClicked] = useState(false);
+  const [isViewInsuranceClicked , setViewInsuranceClicked] = useState(false);
   const [isChallanClicked, setIsChallanClicked] = useState(false);
   const [isAddChallan, setIsAddChallan] = useState(false); // To toggle form visibility
   const [challans, setChallans] = useState([]); // To store list of challans
@@ -38,6 +47,14 @@ function VehicleInfoDisplay() {
     setIsViewClicked(!isViewClicked);
     setIsAddClicked(false); // Ensure Add is turned off
   };
+
+  const toggleInsurance =() => {
+    setViewInsuranceClicked(!isViewInsuranceClicked);
+    setIsAddClicked(false);
+
+  }
+
+  
   const toggleViewChallan = () => {
     setIsChallanClicked(!isChallanClicked);
     setIsAddChallan(false); // Ensure Add is turned off
@@ -123,14 +140,15 @@ function VehicleInfoDisplay() {
 
 
   return (
-    <div>
+    <div >
       <Header />
       
         {/* Button to add a new vehicle */}
-        <div className="mb-4 flex space-x-48 m-6 mx-40 max-w-[1296px] ">
+        <div className="bg-stone-400 p-1 ">
+        <div className="mb-4 flex space-x-48  mx-40 max-w-[1296px] ">
           <button
             onClick={()=>toggleProfile(true)}
-            className=" text-black font-bold underline"
+            className=" text-black font-bold underline hover:text-blue-900"
           >
          Add Vehicle
         
@@ -146,7 +164,7 @@ function VehicleInfoDisplay() {
 
   {/* View Insurance button */}
   <button
-    onClick={toggleViewVehicles}
+    onClick={toggleInsurance}
     className=" text-black font-bold underline"
   >
     View Insurance
@@ -157,7 +175,7 @@ function VehicleInfoDisplay() {
   onClick={togglechllan} // Set the selected vehicle number
   className="text-black font-bold underline"
 >
-   add Challan
+   Search Challan
 </button>
 <button
   onClick={toggleViewChallan} // Set the selected vehicle number
@@ -166,6 +184,9 @@ function VehicleInfoDisplay() {
    Veiw Challan
 </button>
   </div>
+  </div>
+
+ 
 
   {
         isAddClicked && <VehicleInformation setIsAddClicked={setIsAddClicked} setVehicles={setVehicles}/>
@@ -226,6 +247,8 @@ function VehicleInfoDisplay() {
     </div>
   )
 )}
+
+
 
 
 {isViewClicked && (
@@ -292,9 +315,89 @@ function VehicleInfoDisplay() {
 )}
 
 
+{isViewInsuranceClicked && (
+  vehicles.length > 0 ? (
+    <>
+      {vehicles.map((vehicle, index) => {
+        const insuranceExpiryDate = new Date(vehicle.rtoUserVehicleData.rc_insurance_upto);
+        const currentDate = new Date();
+        const isInsuranceExpired = insuranceExpiryDate < currentDate;
+
+        return (
+          <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
+            <div className="p-4 bg-gray-50 rounded-lg">
+              {/* Show insurance details only if present */}
+              {(vehicle.rtoUserVehicleData.rc_insurance_comp &&
+                vehicle.rtoUserVehicleData.rc_insurance_upto) ? (
+                <>
+                  <p>Insurance company: {vehicle.rtoUserVehicleData.rc_insurance_comp}</p>
+                  <p>Insurance upto: {insuranceExpiryDate.toLocaleDateString()}</p>
+                  {isInsuranceExpired && (
+                    <p className="text-red-600 font-semibold">
+                      Insurance has expired! Please renew as soon as possible.
+                    </p>
+                  )}
+                </>
+              ) : (
+                <p className="text-gray-600">
+                  Insurance details not available for this vehicle.
+                </p>
+              )}
+            </div>
+            
+          </div>
+        );
+      })}
+
+      {/* Recommended Insurance Providers */}
+      <div className="mt-8 p-4 bg-white rounded-lg shadow-md">
+        <h3 className="text-xl font-semibold mb-4">Recommended Insurance Providers</h3>
+        <div className="flex justify-center gap-4">
+        <img
+      src={acko}
+      alt="Acko Insurance"
+      className="w-24 h-12 object-contain"
+    />
+    <img
+      src={kotak}
+      alt="Kotak Insurance"
+      className="w-24 h-12 object-contain"
+    />
+    <img
+      src={bajaj}
+      alt="Bajaj Allianz"
+      className="w-24 h-12 object-contain"
+    />
+    <img
+      src={bharti}
+      alt="Bharti AXA"
+      className="w-24 h-12 object-contain"
+    />
+    <img
+      src={zuno}
+      alt="Zuno Insurance"
+      className="w-24 h-12 object-contain"
+    />
+        </div>
+      </div>
+    </>
+  ) : (
+    <div className="flex justify-center items-start mt-[250px] min-h-screen">
+      
+    </div>
+  )
+)}
+
+
+<section>
+  <MaintenanceTips/>
+</section>
 
 
 
+<section className=' bg-black padding-x padding-t pb-8'>
+    <Footer />
+    </section>
       </div>
   );
 }

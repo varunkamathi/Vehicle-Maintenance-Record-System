@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import  Footer  from '../sections/Footer';
 import SuperQuality from '../sections/SuperQuality';
 import SpecialOffer from '../sections/SpecialOffer';
+import Hero from '../sections/Hero';
 
 
 
@@ -45,7 +46,6 @@ function WelcomePage() {
     
     </div>
       </section>
-
 
       <section className='padding'>
         <SpecialOffer />

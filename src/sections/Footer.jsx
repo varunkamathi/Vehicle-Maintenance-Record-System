@@ -7,15 +7,7 @@ const Footer = () => {
     <footer id='contact-us' className='max-container'>
       <div className='flex justify-between items-start gap-20 flex-wrap max-lg:flex-col'>
         <div className='flex flex-col items-start'>
-          <a href='/'>
-            <img
-              src={footerLogo}
-              alt='logo'
-              width={150}
-              height={46}
-              className='m-0'
-            />
-          </a>
+          
           <p className='mt-6 text-base leading-7 font-montserrat text-white sm:max-w-sm'>
             Get shoes ready for the new term at your nearest Nike store. Find
             Your perfect Size In Store. Get Rewards

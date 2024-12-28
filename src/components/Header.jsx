@@ -11,25 +11,17 @@ function Header() {
   };
 
   return (
-    <header className="bg-orange-600 text-white shadow-md py-4">
+    <header className="bg-blue-950 text-white shadow-md py-4">
      
       <div className="container mx-auto max-w-[1296px] flex justify-between items-center">
        
         <h1 className="text-2xl font-bold text-white drop-shadow-lg">
-        <a href='/'>
-                  <img
-                    src={logo1}
-                    alt='logo'
-                    width={129}
-                    height={29}
-                    className='m-0 w-[111px] h-140px]'
-                  />
-
-                </a>
+        Vehicle Record Maintenance System
+                  
         </h1>
         <nav className="flex items-center">
           {/* Profile Toggle Button */}
-          <button onClick={toggleProfile} className="focus:outline-none">
+          <button onClick={toggleProfile} className="focus:outline-none bg-white rounded">
             <img
               src="profile.png"
               alt="Profile"

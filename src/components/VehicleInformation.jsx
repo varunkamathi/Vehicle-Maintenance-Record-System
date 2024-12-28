@@ -124,10 +124,10 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
   };
 
   return (
-    <section className="mb-6 p-4 bg-white rounded-lg shadow-md">
+    <section className="mb-4 p-3 bg-white rounded-lg shadow-sm max-w-md mx-auto">
       <ToastContainer />
       <h2 className="text-2xl font-semibold mb-4">Add Vehicle Information</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3">
         {/* Owner Name */}
         <div className="p-4 bg-gray-50 rounded-lg">
           <label className="block mb-2 font-semibold">Owner Name</label>
@@ -157,20 +157,7 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
         </div>
 
 
-        {/* VIN */}
-        <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">VIN</label>
-          <input
-            type="text"
-            name="vin"
-            value={vehicleData.vin}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            placeholder="Enter VIN (17 characters)"
-            // required
-          />
-        </div>
-
+      
        
 
         {/* VRN Lookup Button */}

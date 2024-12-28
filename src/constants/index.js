@@ -4,7 +4,6 @@ import { bigShoe1, bigShoe2, bigShoe3, customer1, customer2, shoe4, shoe5, shoe6
 export const navLinks = [
     { href: "#home", label: "Home" },
     { href: "#about-us", label: "About Us" },
-    { href: "#products", label: "Products" },
     { href: "#contact-us", label: "Contact Us" },
 ];
 
@@ -41,14 +40,12 @@ export const products = [
 
 export const footerLinks = [
     {
-        title: "Products",
+        title: "Features",
         links: [
-            { name: "Air Force 1", link: "/" },
-            { name: "Air Max 1", link: "/" },
-            { name: "Air Jordan 1", link: "/" },
-            { name: "Air Force 2", link: "/" },
-            { name: "Nike Waffle Racer", link: "/" },
-            { name: "Nike Cortez", link: "/" },
+            { name: "RC Details", link: "/" },
+            { name: "E-Challan", link: "/" },
+            { name: "Insurance Alert", link: "/" },
+            { name: "Maintenance Tips ", link: "/" },
         ],
     },
     {
@@ -64,7 +61,7 @@ export const footerLinks = [
     {
         title: "Get in touch",
         links: [
-            { name: "customer@nike.com", link: "mailto:customer@nike.com" },
+            { name: "customer@vehicle.com", link: "mailto:customer@vehicle.com" },
             { name: "+92554862354", link: "tel:+92554862354" },
         ],
     },

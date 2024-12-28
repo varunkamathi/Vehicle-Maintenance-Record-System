@@ -37,6 +37,23 @@ export const VehicleProvider = ({ children }) => {
       console.error("Error fetching vehicles:", error.response?.data || error.message);
     }
   };
+  // fetch isurance
+  const fetchisurance = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("No token found. User might not be authenticated.");
+        return;
+      }
+      const response = await axios.get(`/api/vehicles/get/${storedUserId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("checking get insurance",response);
+      setVehicles(response.data.vehicles);
+    } catch (error) {
+      console.error("Error fetching vehicles:", error.response?.data || error.message);
+    }
+  };
   
   // Fetch all challans for the logged-in user
   const fetchChallans = async () => {
@@ -73,6 +90,7 @@ export const VehicleProvider = ({ children }) => {
       addVehicle,
       fetchVehicles,
       fetchChallans, // Expose fetchChallans function
+      fetchisurance
     }}>
       {children}
     </VehicleContext.Provider>
