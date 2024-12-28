@@ -1,6 +1,6 @@
 import { hamburger } from "../assets/icons";
 import { headerLogo } from "../assets/images";
-import { navLinks } from "../constants";
+import { navLinks } from "../constants"
 import RegisterPage from '../components/Register';  // Adjust path if needed
 import LoginPage from '../components/Login'; 
 import {logo1} from "../assets/images/index.js"
@@ -38,7 +38,7 @@ const Nav = () => {
         <div className='flex gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24'>
           <a
              onClick={() => { setShowLogin(true); setShowRegister(false); setIsPopupVisible(true)}}
-             className=" text-black px-4 py-2  transition duration-200 font-bold"
+             className=" text-black px-4 py-2  transition duration-200 font-bold cursor-pointer"
           >
             Login
           </a>
@@ -48,7 +48,7 @@ const Nav = () => {
 
            <button
               onClick={() => {setShowLogin(false); setIsPopupVisible(false);}}
-           className="text-white text-xl m-1 float-right cursor-pointer"
+           className="text-black text-xl m-1 float-right cursor-pointer"
             >
            X
            </button>
@@ -59,17 +59,17 @@ const Nav = () => {
           <span className="text-3xl">/</span>
           <a 
             onClick={() => { setShowRegister(true); setShowLogin(false); }}
-           className="text-black px-4 py-2 transition duration-200 font-bold"
+           className="text-black px-4 py-2 transition duration-200 font-bold cursor-pointer"
           >
           signup
          </a>
          {/* Register Modal */} 
         {showRegister && (
-       <div className="fixed inset-0 flex items-center justify-center bg-opacity-75">
+       <div className="fixed inset-0 flex items-center bg-gray-900 justify-center bg-opacity-75">
        <div className="p-8 w-full max-w-md h-4/5">
       <button
        onClick={() => {setShowRegister(false); setIsPopupVisible(false)}}
-       className="text-white text-xl m-1 float-right cursor-pointer"
+       className="text-black text-xl m-1 float-right cursor-pointer"
          >
          X
       </button>

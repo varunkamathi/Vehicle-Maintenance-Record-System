@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import Nav from '../components/Nav';
 import  Footer  from '../sections/Footer';
 import SuperQuality from '../sections/SuperQuality';
+import SpecialOffer from '../sections/SpecialOffer';
+
+
 
 function WelcomePage() {
   // State to toggle between Login and Register forms
@@ -41,6 +44,11 @@ function WelcomePage() {
       
     
     </div>
+      </section>
+
+
+      <section className='padding'>
+        <SpecialOffer />
       </section>
 
       <section className='padding'>
