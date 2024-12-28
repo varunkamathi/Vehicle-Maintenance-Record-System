@@ -13,19 +13,36 @@ function VehicleInfoDisplay() {
   const [vehicles,setVehicles]=useState([]);
   const [isAddClicked,setIsAddClicked]=useState(false);
   const [isViewClicked, setIsViewClicked] = useState(false);
+  const [isChallanClicked, setIsChallanClicked] = useState(false);
+  const [isAddChallan, setIsAddChallan] = useState(false); // To toggle form visibility
+  const [challans, setChallans] = useState([]); // To store list of challans
+
+  // Function to toggle the form
+  
+
 
 
 
     const toggleProfile = () => {
       setIsAddClicked((prevState) => !prevState);// Toggle the state
     };
+    const togglechllan = () => {
+      setIsAddChallan((prevState) => !prevState);// Toggle the state
+    };
   console.log("checking the vehicles array",vehicles);
+  console.log("checking the challans array",challans);
+
 
 
   const toggleViewVehicles = () => {
     setIsViewClicked(!isViewClicked);
     setIsAddClicked(false); // Ensure Add is turned off
   };
+  const toggleViewChallan = () => {
+    setIsChallanClicked(!isChallanClicked);
+    setIsAddChallan(false); // Ensure Add is turned off
+  }
+
 
   // get userId;
   const storedUserId = localStorage.getItem("userId");
@@ -59,23 +76,49 @@ function VehicleInfoDisplay() {
     setVehicles(updatedVehicles);
   };*/
 
-  useEffect(()=>{
-    
-    const fetchVehicelsFromBackEnd = async()=>{
-      console.log("backend function called")
-      const response = await axios.get(`/api/vehicles/get/${storedUserId}`);
-      
-      if(response.status===200){
-        console.log("hey i am ok");
-        setVehicles(response.data)
+  useEffect(() => {
+    const fetchVehiclesFromBackEnd = async () => {
+      try {
+        console.log("Fetching vehicles from backend");
+        const response = await axios.get(`/api/vehicles/get/${storedUserId}`);
+        if (response.status === 200) {
+          console.log("Vehicles fetched successfully:", response.data);
+          setVehicles(response.data);
+        } else {
+          console.error("Failed to fetch vehicles");
+        }
+      } catch (error) {
+        console.error("Error fetching vehicles:", error.response?.data || error.message);
       }
-      
+    };
   
-      
-    }
+    const fetchChallanFromBackEnd = async () => {
+      try {
+        console.log("Fetching challans from backend");
+        const response = await axios.get(`/api/vehicles/get/challan/${storedUserId}`);
+        if (response.status === 200) {
+          console.log("Challans fetched successfully:", response.data);
+          const challanData = response.data;
+          if (Array.isArray(challanData)) {
+            setChallans(challanData);
+          } else {
+            console.warn("Challans data is not an array:", challanData);
+            setChallans([]);
+          }
+        } else {
+          console.error("Failed to fetch challans");
+        }
+      } catch (error) {
+        console.error("Error fetching challans:", error.response?.data || error.message);
+      }
+    };
+  
+    fetchVehiclesFromBackEnd();
+    fetchChallanFromBackEnd();
+  }, [storedUserId]);
 
-    fetchVehicelsFromBackEnd();
-  },[vehicles.length]);
+   
+  
 
 
 
@@ -103,7 +146,7 @@ function VehicleInfoDisplay() {
 
   {/* View Insurance button */}
   <button
-    onClick={() => alert("View Insurance functionality not yet implemented.")}
+    onClick={toggleViewVehicles}
     className=" text-black font-bold underline"
   >
     View Insurance
@@ -111,20 +154,81 @@ function VehicleInfoDisplay() {
 
   {/* View Challan button */}
   <button
-    onClick={() => alert("View Challan functionality not yet implemented.")}
-    className=" text-black font-bold underline"
-  >
-    View Challan
-  </button> 
+  onClick={togglechllan} // Set the selected vehicle number
+  className="text-black font-bold underline"
+>
+   add Challan
+</button>
+<button
+  onClick={toggleViewChallan} // Set the selected vehicle number
+  className="text-black font-bold underline"
+>
+   Veiw Challan
+</button>
   </div>
 
   {
         isAddClicked && <VehicleInformation setIsAddClicked={setIsAddClicked} setVehicles={setVehicles}/>
       }
 
+ {/* Render EChallanInformation if isAddClicked is true */}
+ {isAddChallan && (
+        <EChallanDetails
+        setIsAddChallan={setIsAddChallan}
+          setChallans={setChallans}
+        />
+      )}
+       
+
+
 
         {/* Display each vehicle's information */}
-        {isViewClicked && (
+        {isChallanClicked && (
+  challans.length > 0 ? (
+    challans.map((challan, index) => (
+      <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">
+          Challans #{index + 1}
+        </h2>
+        <div className="p-4 bg-gray-50 rounded-lg">
+          <h3 className="font-semibold">
+          challan No: {challan.challans.challanNo || "N/A"}
+          </h3>
+          {/* <p>VIN: {vehicle.vin || "N/A"}</p> */}
+          <p>date: {challan.challans.date || "N/A"}</p>
+          <p>amounte: {challan.challans.amount}</p>
+          <p>status: {challan.challans.status}</p>
+          <p>violation: {challan.challans.violation}</p>
+          <p>location: {challan.challans.location}</p>
+          
+          
+         
+        </div>
+
+        {/* Edit and Delete Buttons */}
+        
+      </div>
+    ))
+  ) : (
+    <div className="flex justify-center items-start mt-[250px] min-h-screen">
+      <div className="flex flex-col items-center space-y-4">
+        <img
+          src="NoData2.png"
+          alt="Empty Garage"
+          className="w-24 h-24 object-cover opacity-92"
+        />
+        <p className="text-xl font-medium text-gray-700">
+          No vehicles yet—tap&nbsp;
+          <span className="text-orange-500 font-semibold">Add Vehicle</span>
+          &nbsp;to get started.
+        </p>
+      </div>
+    </div>
+  )
+)}
+
+
+{isViewClicked && (
   vehicles.length > 0 ? (
     vehicles.map((vehicle, index) => (
       <div key={index} className="mb-6 p-4 bg-white rounded-lg shadow-md">
@@ -186,6 +290,10 @@ function VehicleInfoDisplay() {
     </div>
   )
 )}
+
+
+
+
 
       </div>
   );
