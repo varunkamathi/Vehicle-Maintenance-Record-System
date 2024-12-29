@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function VehicleInformation({setIsAddClicked,setVehicles}) {
+function VehicleInformation({ setIsAddClicked, setVehicles }) {
   const navigate = useNavigate();
- 
+
   const [vehicleData, setVehicleData] = useState({
-    ownerName: '',
-    vin: '',
-    vrn: '', // Optional VRN field
+    ownerName: "",
+    vin: "",
+    vrn: "", // Optional VRN field
   });
 
-  console.log(vehicleData)
+  console.log(vehicleData);
 
   const [loading, setLoading] = useState(false);
 
@@ -73,8 +73,8 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
     }, 2000);
 
     const { ownerName, vin, vrn } = vehicleData;
-    if(!ownerName || !vrn){
-      return toast.error("Both owner name and vrn is required")
+    if (!ownerName || !vrn) {
+      return toast.error("Both owner name and vrn is required");
     }
 
     // if (!validateVIN(vin)) {
@@ -89,37 +89,48 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
       //   return;
       // }
 
-      const storedUserId = localStorage.getItem('userId');
-      if(!storedUserId){
+      const storedUserId = localStorage.getItem("userId");
+      if (!storedUserId) {
         return toast.error("Kindly logged in first!");
       }
       //const response =await axios.get(`/api/vehicles/rto/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`)
-      const response =await axios.get(`/api/vehicles/vehicle/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`)
+      const response = await axios.get(
+        `/api/vehicles/vehicle/lookup?vehicle_no=${vrn}&ownerName=${ownerName}&userId=${storedUserId}`
+      );
 
-      if(response.status ===403){
-        return toast.error("You are not authorized kindly check your owner name");
+      if (response.status === 403) {
+        return toast.error(
+          "You are not authorized kindly check your owner name"
+        );
       }
 
-        if(response.status===200){
-          console.log("response from rto is",response);
-          toast.success('Vehicle information added successfully.');
-          setIsAddClicked(false);
+      if (response.status === 200) {
+        console.log("response from rto is", response);
+        toast.success("Vehicle information added successfully.");
+        setIsAddClicked(false);
         // adding vehickes to vehicle array for the optimistic updates;
-       setVehicles((prev)=>{
+        setVehicles((prev) => {
           console.log(prev);
-          return [response.data.vehicle,...prev]
-       });
-        }
-    
+          return [response.data.vehicle, ...prev];
+        });
+      }
+
       // const payload = { ...vehicleData, userId: storedUserId || null };
 
       // await axios.post('/api/vehicles/add', payload, { withCredentials: true });
 
       // navigate('/vehicle-info-display');
     } catch (error) {
-      console.log("error in communicate with RTO",error);
-      console.error('Error adding vehicle data:', error.response?.data || error.message);
-      toast.error(error.response?.data || error.message||'Error adding vehicle data. Please try again.');
+      console.log("error in communicate with RTO", error);
+      console.error(
+        "Error adding vehicle data:",
+        error.response?.data || error.message
+      );
+      toast.error(
+        error.response?.data ||
+          error.message ||
+          "Error adding vehicle data. Please try again."
+      );
     }
   };
 
@@ -142,9 +153,11 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
           />
         </div>
 
-         {/* Optional VRN */}
-         <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block mb-2 font-semibold">VRN ( Vehicle Registration Number )</label>
+        {/* Optional VRN */}
+        <div className="p-4 bg-gray-50 rounded-lg">
+          <label className="block mb-2 font-semibold">
+            VRN ( Vehicle Registration Number )
+          </label>
           <input
             type="text"
             name="vrn"
@@ -155,10 +168,6 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
             required
           />
         </div>
-
-
-      
-       
 
         {/* VRN Lookup Button */}
         {/* <div className="col-span-1 flex justify-end">
@@ -174,23 +183,21 @@ function VehicleInformation({setIsAddClicked,setVehicles}) {
 
         {/* Submit Button */}
         <div className="col-span-1 mt-4 flex flex-col items-center">
-        <button
-      
-      disabled={isLoading}
-      className={`relative flex items-center justify-center px-6 py-2 text-white font-semibold rounded-lg ${
-        isLoading
-          ? "bg-gray-400 cursor-not-allowed"
-          : "bg-blue-500 hover:bg-blue-600"
-      }`}
-    >
-      {isLoading ? (
-        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-      ) : (
-        "Submit"
-      )}
-    </button>
-
-         
+          <button
+            disabled={isLoading}
+            className={`bg-white text-orange-600 px-14 py-2 rounded-full hover:bg-orange-600 hover:text-white shadow-lg hover:shadow-xl border-[2px] border-orange-600 transition-all duration-200 flex items-center justify-center ${
+              isLoading
+                ? "bg-orange-400 cursor-not-allowed "
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
+            style={{ height: "40px", width: "200px" }} // Ensure the button size stays constant
+          >
+            {isLoading ? (
+              <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+            ) : (
+              "Submit"
+            )}
+          </button>
         </div>
       </form>
     </section>

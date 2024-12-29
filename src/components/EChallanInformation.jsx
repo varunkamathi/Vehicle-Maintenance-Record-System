@@ -59,7 +59,7 @@ function EChallanInformation({ setIsAddChallan, setChallans }) {
   };
 
   return (
-    <section className="mb-4 p-3 bg-white rounded-lg shadow-sm max-w-md mx-auto">
+    <section className="mb-6 p-4 bg-white rounded-lg shadow-md">
       <ToastContainer />
       <h2 className="text-2xl font-semibold mb-4">View Vehicle Challan</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
@@ -79,18 +79,19 @@ function EChallanInformation({ setIsAddChallan, setChallans }) {
 
         {/* Submit Button */}
         <div className="col-span-1 mt-4 flex flex-col items-center">
-          <button
+        <button
             disabled={isLoading}
-            className={`relative flex items-center justify-center px-6 py-2 text-white font-semibold rounded-lg ${
+            className={`bg-white text-orange-600 px-14 py-2 rounded-full hover:bg-orange-600 hover:text-white shadow-lg hover:shadow-xl border-[2px] border-orange-600 transition-all duration-200 flex items-center justify-center ${
               isLoading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-blue-500 hover:bg-blue-600'
+                ? "bg-orange-400 cursor-not-allowed "
+                : "bg-blue-500 hover:bg-blue-600"
             }`}
+            style={{ height: "40px", width: "200px" }} // Ensure the button size stays constant
           >
             {isLoading ? (
               <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
         </div>

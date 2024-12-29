@@ -1,12 +1,11 @@
 // src/pages/WelcomePage.js
-import React, { useState } from 'react';
-import Nav from '../components/Nav';
-import  Footer  from '../sections/Footer';
-import SuperQuality from '../sections/SuperQuality';
-import SpecialOffer from '../sections/SpecialOffer';
-import Hero from '../sections/Hero';
-
-
+import React, { useState } from "react";
+import Nav from "../components/Nav";
+import Footer from "../sections/Footer";
+import SuperQuality from "../sections/SuperQuality";
+import SpecialOffer from "../sections/SpecialOffer";
+import Hero from "../sections/Hero";
+import MaintenanceTips from "../components/Maintenance"
 
 function WelcomePage() {
   // State to toggle between Login and Register forms
@@ -15,49 +14,46 @@ function WelcomePage() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   return (
-    <main className='relative'>
-      <header>            <Nav />
+    <main className="relative">
+      <header>
+        {" "}
+        <Nav />
       </header>
 
-    
-    <section id='home' className='padding-x py-10'>
-    <div className="flex flex-col justify-center min-h-screen items-star">
-      
-        
-        {/* Left Side: Welcome Text and Buttons */}
-        
+
+      <section id="home" className="padding-x py-8">
+        {/* <img src="car.png" alt="car" className="absolute inset-[5%] object-cover z-[-1]" /> */}
+        <div className="flex flex-col justify-center items-center min-h-[30vh] items-star inset-0 z-10">
+
           <h1 className="text-4xl font-bold mb-6 text-sky-950 ">
-            Welcome to Vehicle Maintenance Record System
+            Welcome to Vehicle Record Maintenance System
           </h1>
-          <p className='text-1xl font-bold mb-6 text-sky-950 uppercase'>
-            We introduce our website that merges all special features you can use in one platform.
+          <p className="text-1xl font-bold mb-6 text-sky-950 uppercase ">
+            We introduce our website that merges all special features you can
+            use in one platform.
           </p>
-          <p className="text-lg mb-6 text-gray-600">
+          <p className="text-lg mb-6 text-gray-600 ">
             Please log in or sign up to continue.
           </p>
-          <div className="flex flex-col items-start space-y-4">
-           
+          <div className="flex flex-col items-center space-y-4"></div>
         </div>
-        
-        
-
-      
-      
-    
-    </div>
       </section>
 
-      <section className='padding'>
+      <section className="pt-32">
+        <MaintenanceTips />
+      </section>
+
+      <section className="padding">
         <SpecialOffer />
       </section>
 
-      <section className='padding'>
+      <section className="padding">
         <SuperQuality />
       </section>
-    
-    <section className=' bg-black padding-x padding-t pb-8'>
-    <Footer />
-    </section>
+
+      <section className=" bg-black padding-x padding-t pb-8">
+        <Footer />
+      </section>
     </main>
   );
 }

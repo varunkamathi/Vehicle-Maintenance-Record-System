@@ -33,7 +33,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-full text-slate-700 rounded-xl bg-slate-300 ">
+    <div className="flex flex-col items-center justify-center min-h-full text-slate-700 rounded-xl">
+      
       <h2 className="text-3xl font-bold mb-6">Login</h2>
       <form onSubmit={handleLogin} className="flex flex-col space-y-4 w-80">
         <input
@@ -41,14 +42,14 @@ function LoginPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="p-2 rounded-lg bg-white border border-gray-400"
+          className="p-2 rounded-lg bg-slate-100 border border-gray-400 "
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-2 rounded-lg bg-white border border-gray-400"
+          className="p-2 rounded-lg bg-slate-100 border border-gray-400"
         />
         <button
           type="submit"
