@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AddDocument from "./AddDocument";
 
 const Profile = () => {
   const [user, setUser] = useState(null); // Stores user data
@@ -60,6 +61,9 @@ const Profile = () => {
             <p className="text-gray-700">
               {user?.email || storedEmail || "Email not available"}
             </p>
+          </div>
+          <div>
+            <AddDocument/>
           </div>
           <div className=" flex justify-center">
             <button
