@@ -9,8 +9,7 @@ const Footer = () => {
         <div className='flex flex-col items-start'>
           
           <p className='mt-6 text-base leading-7 font-montserrat text-white sm:max-w-sm'>
-            Get shoes ready for the new term at your nearest Nike store. Find
-            Your perfect Size In Store. Get Rewards
+          Stay connected with us and explore all the exciting features and updates we have to offer!
           </p>
           <div className='flex items-center gap-5 mt-8'>
             {socialMedia.map((icon) => (
@@ -18,7 +17,9 @@ const Footer = () => {
                 className='flex justify-center items-center w-12 h-12 bg-white rounded-full'
                 key={icon.alt}
               >
+                <a href={icon.href}>
                 <img src={icon.src} alt={icon.alt} width={24} height={24} />
+                </a>
               </div>
             ))}
           </div>

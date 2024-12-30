@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import Footer from "../sections/Footer";
 import SuperQuality from "../sections/SuperQuality";
 import SpecialOffer from "../sections/SpecialOffer";
-import MaintenanceTips from "../components/Maintenance"
+import MaintenanceTips from "../components/Maintenance";
 
 function WelcomePage() {
   // State to toggle between Login and Register forms
@@ -19,25 +19,20 @@ function WelcomePage() {
         <Nav />
       </header>
 
-
-      <section id="home" className="padding-x py-8">
-        {/* <img src="car.png" alt="car" className="absolute inset-[5%] object-cover z-[-1]" /> */}
-        <div className="flex flex-col justify-center items-center min-h-[30vh] items-star inset-0 z-10">
-
-          <h1 className="text-4xl font-bold mb-6 text-sky-950 ">
-            Welcome to Vehicle Record Maintenance System
+      <section>
+        <div className="flex flex-col justify-center items-center min-h-[70vh] text-center relative">
+          <h1 className="text-2xl font-extrabold mb-6 text-sky-950 drop-shadow-lg">
+            Welcome to{" "}
+            <span className="text-orange-500">
+              Vehicle Record Maintenance System
+            </span>
           </h1>
-          <p className="text-1xl font-bold mb-6 text-sky-950 uppercase ">
-            We introduce our website that merges all special features you can
-            use in one platform.
+          <p className="text-4xl font-semibold mb-8 text-sky-900 uppercase tracking-wide">
+            Empowering <span className="text-orange-600">Smarter</span> Vehicle
+            Record Management
           </p>
-          <p className="text-lg mb-6 text-gray-600 ">
-            Please log in or sign up to continue.
-          </p>
-          <div className="flex flex-col items-center space-y-4"></div>
         </div>
       </section>
-
       <section className="pt-32">
         <MaintenanceTips />
       </section>

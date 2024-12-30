@@ -3,7 +3,7 @@ import bigShoe2 from './big-shoe2.png'
 import bigShoe3 from './big-shoe3.png'
 import logo1 from './logo1.png'
 
-import aboutas from './aboutas.webp'
+import aboutus from './aboutas.webp'
 import battery from './battery.jpg'
 import chain_lubrication from './chain_lubrication.webp'
 import bike_air from './bike_air.jpg'
@@ -26,7 +26,7 @@ import customer2 from './customer2.svg'
 import footerLogo from './footer-logo.svg'
 import headerLogo from './header-logo.svg'
 
-import offer from './offer.svg'
+import offer from '../images/simplifyYourVehicleRecordManagement.png'
 
 import shoe4 from './shoe4.svg'
 import shoe5 from './shoe5.svg'
@@ -48,7 +48,7 @@ export {
     bike_air,
     car_breakes,car_oilTopup,car_wheel,chain_lubrication,carboreter,colent,oil_changes,
 
-    aboutas,
+    aboutus,
 
     customer1,
     customer2,
