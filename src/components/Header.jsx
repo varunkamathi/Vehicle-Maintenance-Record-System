@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Profile from "./Profile"; // Import the Profile component
 import { logo1 } from "../assets/images/index.js";
 
 function Header() {
   const [showProfile, setShowProfile] = useState(false); // State to toggle profile visibility
+  const profileRef = useRef(null); // Reference for the profile dropdown
 
   const toggleProfile = () => {
     setShowProfile(!showProfile); // Toggle the state
   };
+
+  const handleClickOutside = (event) => {
+    if (profileRef.current && !profileRef.current.contains(event.target)) {
+      setShowProfile(false); // Close the dropdown if clicked outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="bg-blue-600 shadow-lg py-4 px-6 relative w-full z-10">
@@ -31,7 +45,7 @@ function Header() {
             {/* Profile Toggle Button */}
             <button
               onClick={toggleProfile}
-              className="focus:outline-none bg-white rounded"
+              className="focus:outline-none bg-white rounded-full"
             >
               <img
                 src="profile.png"
@@ -44,7 +58,10 @@ function Header() {
 
         {/* Conditionally render the Profile component */}
         {showProfile && (
-          <div className="absolute top-16 right-4 bg-white shadow-lg rounded-lg p-4 z-50 w-80">
+          <div
+            ref={profileRef}
+            className="absolute top-24 left-3/4 bg-white shadow-xl rounded-xl p-4 z-10 w-72 border border-gray-200"
+          >
             <Profile /> {/* Render the Profile component */}
           </div>
         )}

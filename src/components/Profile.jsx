@@ -37,7 +37,6 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-    
       localStorage.removeItem("email"); // Remove email from localStorage
       navigate("/");
     } catch (error) {
@@ -47,28 +46,34 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center bg-gray-50">
         <p className="text-lg font-medium text-gray-600">Loading profile...</p>
       </div>
     );
   }
 
   return (
-    <div className=" bg-white rounded-lg">
+    <div className="p-6 bg-white w-full max-w-sm">
       {user || storedEmail ? (
         <>
-          <div className="text-center">
-            <p className="text-gray-700">
+          {/* Profile Info */}
+          <div className="text-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-800">Profile</h2>
+            <p className="text-sm text-gray-600">
               {user?.email || storedEmail || "Email not available"}
             </p>
           </div>
-          <div>
-            <AddDocument/>
+
+          {/* Add Document */}
+          <div className="mb-6">
+            <AddDocument />
           </div>
-          <div className=" flex justify-center">
+
+          {/* Logout Button */}
+          <div className="flex justify-center">
             <button
               onClick={handleLogout}
-              className=" text-black rounded underline "
+              className="bg-red-500 text-white px-4 py-2 rounded-full font-medium shadow hover:bg-red-600 transition-all duration-200"
             >
               Logout
             </button>
@@ -79,7 +84,7 @@ const Profile = () => {
           <p className="text-gray-600">Profile not found.</p>
           <button
             onClick={() => navigate("/")}
-            className="mt-4 bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600"
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-full font-medium shadow hover:bg-blue-600 transition-all duration-200"
           >
             Go to Login
           </button>

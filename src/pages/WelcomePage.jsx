@@ -4,7 +4,6 @@ import Nav from "../components/Nav";
 import Footer from "../sections/Footer";
 import SuperQuality from "../sections/SuperQuality";
 import SpecialOffer from "../sections/SpecialOffer";
-import Hero from "../sections/Hero";
 import MaintenanceTips from "../components/Maintenance"
 
 function WelcomePage() {

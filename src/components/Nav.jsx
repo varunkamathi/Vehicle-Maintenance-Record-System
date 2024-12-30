@@ -48,7 +48,7 @@ const Nav = () => {
               setShowRegister(false);
               setIsPopupVisible(true);
             }}
-            className="bg-white text-orange-600 px-5 py-2 rounded-full hover:bg-orange-100 shadow-md hover:shadow-xl border-2 border-orange-600 transition-all duration-200"
+            className="bg-white text-orange-600 px-5 py-2 rounded-full cursor-pointer shadow-md hover:shadow-xl border-2 border-orange-600 transition-all duration-200"
           >
             Login
           </a>
@@ -89,7 +89,7 @@ const Nav = () => {
               setShowRegister(true);
               setShowLogin(false);
             }}
-            className="bg-white text-orange-600 px-5 py-2 rounded-full hover:bg-orange-100 shadow-md hover:shadow-xl border-2 border-orange-600 transition-all duration-200"
+            className="bg-white text-orange-600 px-5 py-2 rounded-full cursor-pointer shadow-md hover:shadow-xl border-2 border-orange-600 transition-all duration-200"
           >
             Signup
           </a>
